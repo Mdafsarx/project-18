@@ -7,11 +7,52 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="max-w-[90%] mx-auto py-9">
+
+<header class="">
+
+<div class="flex justify-between items-center">
+    <!-- PH Tube -->
+    <div class="flex items-center gap-2">
+<img src="Group 25.png" alt="">
+<h1 class="text-3xl font-bold"><span class="text-red-500">PH</span> Tube</h1>
+    </div>
+<button class="btn btn-secondary font-bold">Sort by view</button>
+<button class="btn btn-error text-white">Blog</button>
+</div>
+
+</header>
+
+<main class="">
+
+    <!-- cat button container -->
+<div id="btnContainer" class="flex justify-center items-center py-10 gap-6">
+
+</div>
+
+<!-- VideoCard -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-10" id="VideoContainer">
+</section>
+
+
+<!-- empty message -->
+<div class="flex flex-col items-center justify-center gap-6 my-10 hidden" id="emptyMessage">
+    <img src="Group 18 (2).png" alt="">
+    <p class="text-2xl font-bold">Oops!! Sorry, There is no content here</p>
+</div>
+
+</main>
+
+
+
+
+
     
+<footer>
 
+</footer>
 
-
+<script src="function.js"></script>
 <script src="config.js"></script>
 </body>
 </html>
