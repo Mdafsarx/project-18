@@ -1,4 +1,3 @@
-let isSeeMore=false;
 
 // cat data loading
 function DataLoad(){
@@ -32,17 +31,35 @@ for(const btn of colorBtn){
 }
 getId(isBG).classList.add('bg-red-500')
 
-DataLoad2(cId,isSeeMore)
+DataLoad2(cId)
 }
+let rejValue='1000'
+let sorted=false
 
+function sort(){
+sorted=true
+DataLoad2(rejValue,sorted)
+}
 
 // cat id data loading
 
-function DataLoad2(cId,isSeeMore){
-    console.log(isSeeMore)
+function DataLoad2(cId,sorted){
+    console.log(sorted)
+rejValue=cId
     const url=`https://openapi.programming-hero.com/api/videos/category/${cId}`
     fetch(url).then(res=>res.json())
     .then(Data=>{
+if(sorted){
+
+    Data.data.sort((a,b)=>{
+        const firstE=a.others.views
+        const second=b.others.views
+        const firstViewNumber=parseInt(firstE.replace('K','')||0)
+        const secondViewNumber=parseInt(second.replace('K','')||0)
+        return  secondViewNumber - firstViewNumber 
+    })
+
+}
         
 
 // empty message enable
@@ -52,20 +69,11 @@ if(Data.data.length===0){
     getId('emptyMessage').classList.add('hidden')
 }
 
-if(Data.data.length>5){
-Data=Data.data.slice(0,6)
-getId('seeMore').classList.remove('hidden')
-}
-else{
-    Data=Data.data
-    getId('seeMore').classList.add('hidden')
-}
+
+        Data=Data.data
 
 
-// see more work
-if(isSeeMore){
-    // Data=Data.data
-}
+
 
 const videoContainer=getId('VideoContainer');
 videoContainer.innerHTML=''
@@ -112,9 +120,8 @@ videoContainer.appendChild(videoCard)
 
 
 
-function seeMore(){
-isSeeMore=true
-}
+
+
 
 DataLoad()
-DataLoad2('1000',isSeeMore)
+DataLoad2(rejValue,sorted)
