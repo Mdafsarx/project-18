@@ -1,4 +1,4 @@
-
+let isSeeMore=false;
 
 // cat data loading
 function DataLoad(){
@@ -14,7 +14,7 @@ Data.data.forEach(cat => {
 // console.log(cat)
 const Btn=document.createElement('div')
 Btn.innerHTML=`
-<button class="btn" onclick="catId('${cat.category_id}')">${cat.category}</button>
+<button class="btn colorBtn" id='${cat.category}' onclick="catId('${cat.category_id}','${cat.category}')">${cat.category}</button>
 `
 btnContainer.appendChild(Btn)
 });
@@ -24,15 +24,22 @@ btnContainer.appendChild(Btn)
 
 }
 
-function catId(cId){
+function catId(cId,isBG){
 
-    DataLoad2(cId)
+const colorBtn=document.getElementsByClassName('colorBtn')
+for(const btn of colorBtn){
+    btn.classList.remove('bg-red-500')
+}
+getId(isBG).classList.add('bg-red-500')
+
+DataLoad2(cId,isSeeMore)
 }
 
 
 // cat id data loading
 
-function DataLoad2(cId){
+function DataLoad2(cId,isSeeMore){
+    console.log(isSeeMore)
     const url=`https://openapi.programming-hero.com/api/videos/category/${cId}`
     fetch(url).then(res=>res.json())
     .then(Data=>{
@@ -45,11 +52,24 @@ if(Data.data.length===0){
     getId('emptyMessage').classList.add('hidden')
 }
 
+if(Data.data.length>5){
+Data=Data.data.slice(0,6)
+getId('seeMore').classList.remove('hidden')
+}
+else{
+    Data=Data.data
+    getId('seeMore').classList.add('hidden')
+}
 
+
+// see more work
+if(isSeeMore){
+    // Data=Data.data
+}
 
 const videoContainer=getId('VideoContainer');
 videoContainer.innerHTML=''
-Data.data.forEach((Video)=>{
+Data.forEach((Video)=>{
     // console.log(Video)
 // create a video card
 
@@ -83,11 +103,18 @@ ${vImg}
         </div>
 `
 videoContainer.appendChild(videoCard)
+
 })
 
     })
     .catch(Error=>console.error(Error))
 }
 
+
+
+function seeMore(){
+isSeeMore=true
+}
+
 DataLoad()
-DataLoad2('1000')
+DataLoad2('1000',isSeeMore)
